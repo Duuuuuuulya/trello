@@ -1,5 +1,5 @@
 .addColumnButtonWrapper {
-  width: 360px;
+  min-width: 360px;
   height: 55px;
   border-style: dashed;
   border-color:  #F4F4F4 ;
@@ -44,11 +44,12 @@
 }
 
 .confirmColumnName {
+  color: white;
   margin-top: 5px;
   width: 150px;
   height: 30px;
   border: 0px;
-  background-color: crimson;
+  background-color: #007ac0;
   border-radius: 25px;
   padding-left: 15px;
   padding-right: 15px;

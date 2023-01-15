@@ -20,14 +20,15 @@ const AddNewTaskButton = ({columnId}: AddNewTaskButtonProps) => {
     !createTask ? 
     <div className="addTaskWrapper">
       <AddOutlinedIcon/>
-      {/* <div onClick={() => columns.addTaskToColumn(columnId)}>Add new card</div> */}
       <div onClick={() => setCreateTask(true)}>Add new card</div>
     </div> : 
-    <div>
-      <input  onChange={handleChange}></input>
-      <button onClick={() => {columns.addTaskToColumn(columnId); setCreateTask(false)}}></button>
+    <div className="inputTaskNameWrapper">
+      <input className="inputTaskName" onChange={handleChange}></input>
+      <button className="confirmTaskName" onClick={() => {columns.addTaskToColumn(columnId); setCreateTask(false)}}>Add Task</button>
+      
     </div>
   )
+  
 }
 
 export default AddNewTaskButton

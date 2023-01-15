@@ -1,6 +1,5 @@
 import { makeAutoObservable} from 'mobx'
 
-
 class Columns {
   columnsArr = []
   columnName = ''
@@ -18,13 +17,18 @@ class Columns {
   
 
   addTaskToColumn(columnId) {
-    console.log(columnId)
     const currentColumn = this.columnsArr.find((item) => {
       return item.columnId === columnId
     }) 
     currentColumn.tasks.push({ header: this.header ,text: this.taskText, difficult: this.taskDifficult, taskOwner: this.taskOwner, taskId: Date.now() })
+    console.log(this.columnsArr)
+  }
+
+  deleteTask(taskId, columnId) {
+    this.columnsArr[columnId].tasks = this.columnsArr[columnId].tasks.filter(el => el.taskId !== taskId)
   }
   
+
 }
 
 export default new Columns()

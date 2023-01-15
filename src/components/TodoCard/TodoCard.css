@@ -1,5 +1,5 @@
 .taskWrapper { 
-  width: 360px;
+  width: 350px;
   min-height: 100px;
   max-height: 400px;
   padding: 5px 0px 5px 10px;
@@ -19,4 +19,8 @@
   word-wrap: break-word;
   display: flex;
   overflow-x:hidden
+}
+
+.delete_header {
+  display: flex;
 }

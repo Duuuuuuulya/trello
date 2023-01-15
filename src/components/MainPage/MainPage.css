@@ -1,5 +1,5 @@
 .header {
-  height: 60px;
+  height: 5vh;
   border-bottom: 2px solid #F4F4F4;
   width: 100%;
   display: flex;
@@ -49,6 +49,8 @@
 .columnsWrapper {
   display: flex;
   flex-direction: row;
+  overflow-x: auto;
+  height: 95vh;
 }
 
 .ColumnHeader {
@@ -58,7 +60,7 @@
 
 .columnHeaderItem {
     margin: 15px;
-    width: 360px;
+    min-width: 360px;
     height: 60px;
     background-color: #F4F4F4;
     border-radius: 10px;

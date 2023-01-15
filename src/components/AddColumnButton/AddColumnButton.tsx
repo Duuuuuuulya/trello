@@ -21,7 +21,7 @@ const AddColumnButton = observer(() => {
     :    
     <div className="addColumnButtonInput">  
       <input className="columnNameInput" onChange={handleChange}/>
-      <button className="confirmColumnName" onClick={() => {setOpen(false); columns.addNewColumnEnd() }}  />
+      <button className="confirmColumnName" onClick={() => {setOpen(false); columns.addNewColumnEnd() }}>Add Column</button>
     </div>
   )
 })
