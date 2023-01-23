@@ -10,14 +10,28 @@ import Header from "../../Header/Header";
 import AddNewTaskButton from "../AddNewTask/AddNewTaskButton";
 import TodoCard from "../TodoCard/TodoCard";
 
+interface MainPageProps {
+
+}
+
+interface ICulom {
+  columnId: Number
+  tasks: []
+  title: string
+}
+
+enum IStartCulom {
+  ICulom,
+  null
+}
+
 
 const MainPage = observer(()  => {
-  const[currentColumn, setCurrentColumn] = useState(null)
-  const[currentTask, setCurrentTask] = useState(null)
+
   
-  function dragStartHandler(e: React.DragEvent<HTMLDivElement>, elem: any, item: any) {
-    setCurrentColumn(elem)
-    setCurrentTask(item)
+  function dragStartHandler(e: React.DragEvent<HTMLDivElement>, task: any, column: any) {
+    columns.currentTask = task
+    columns.currentColumn = column
   }
 
   function dragLeaveHandler(e: React.DragEvent<HTMLDivElement>): void {
@@ -32,39 +46,14 @@ const MainPage = observer(()  => {
     e.preventDefault()
   }
 
-  function dropCardHandler(e: React.DragEvent<HTMLDivElement>, item: any): void {
-    item.tasks.push(currentTask)
-    const currentIndex = currentColumn.tasks.indexOf(currentTask)
-    currentColumn.tasks.splice(currentIndex, 1 )
-    columns.columnsArr.map(b => {
-      if (b.taskId === item.columnId) {
-        return item
-      }
-      if (b.taskId === currentColumn.columnId) {
-        return currentColumn
-      }
-      return b
-    })
+  function dropCardHandler(e: React.DragEvent<HTMLDivElement>, column : any): void {
+    columns.dropCard(column)
   }
 
-  function dropHandler(e: React.DragEvent<HTMLDivElement>, elem: any, item: any): void {
+  function dropHandler(e: React.DragEvent<HTMLDivElement>, task: any, column: any): void {
     e.preventDefault()
-    console.log(item.taskId)
-    console.log(elem.taskId)
-    const currentIndex = currentColumn.tasks.indexOf(currentTask)
-    currentColumn.tasks.splice(currentIndex, 1 )
-    const dropIndex = elem.tasks.indexOf(item)
-    elem.tasks.splice(dropIndex + 1, 0, currentTask)
-    columns.columnsArr.map(b => {
-      if (b.taskId === item.columnId) {
-        return item
-      }
-      if (b.taskId === currentColumn.columnId) {
-        return currentColumn
-      }
-      return b
-    })
-
+    e.stopPropagation()
+    columns.dropHandlerFunc(task, column)
   }
 
  
@@ -74,32 +63,32 @@ const MainPage = observer(()  => {
     <Header />
     <div className="columnsWrapper">
       <div className="ColumnHeader">
-        {columns.columnsArr.map((item, idx) => (
+        {columns.columnsArr.map((column, idx) => (
             <div className="column" 
             onDragOver={(e) => dragOverHandler(e)}
-            onDrop={(e) => dropCardHandler(e, item)}
-            key={item.tasks.taskId}
+            onDrop={(e) => dropCardHandler(e, column)}
+            key={column.columnId}
             >
-            <div className="columnHeaderItem" key={item.title} 
+            <div className="columnHeaderItem" key={column.title} 
              >
-              {item.title}
+              {column.title}
             </div>
             <div>
-            {item.tasks.map((elem: any) => (
+            {column.tasks.map((task: any) => (
             <div 
-            key={elem.columnId} 
+            key={task.taskId} 
             draggable={true}
-            onDragStart={(e) => dragStartHandler(e, item, elem)}
+            onDragStart={(e) => dragStartHandler(e, task, column)}
             onDragLeave={(e) => dragLeaveHandler(e)}
             onDragOver={(e) => dragOverHandler(e)}
             onDragEnd={(e) => dragEndHandler(e)}
-            onDrop={(e) => dropHandler(e, item, elem)}
+            onDrop={(e) => dropHandler(e, task, column)}
             >
-            <TodoCard text={elem.text} taskId={elem.taskId} difficult={elem.difficult} taskOwner={elem.taskOwner} header ={elem.header} columnId={idx}/>
+            <TodoCard text={task.text} taskId={task.taskId} difficult={task.difficult} taskOwner={task.taskOwner} header ={task.header} columnId={idx}/>
             </div>
             ))}
             </div>
-            <AddNewTaskButton columnId = {item.columnId} header = {item.header}/>
+            <AddNewTaskButton columnId = {column.columnId} header = {column.header}/>
             </div> 
          
         ))}   
