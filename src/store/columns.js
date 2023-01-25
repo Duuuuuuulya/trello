@@ -18,6 +18,7 @@ class Columns {
 
   addNewColumnEnd() {
     this.columnsArr.push({title: this.columnName, tasks: [], columnId: Date.now()})
+    this.columnName = ''
     localStorage.setItem('columns', JSON.stringify(this.columnsArr))
   }
   

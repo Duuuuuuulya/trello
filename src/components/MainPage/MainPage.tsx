@@ -71,7 +71,7 @@ const MainPage = observer(()  => {
             onDrop={(e) => dropCardHandler(e, column)}
             key={column.columnId}
             >
-            <div className="columnHeaderItem" key={column.title}>
+            <div className="columnHeaderItem" key={column.columnId}>
               {column.title}
               <div className="deleteColumn" onClick={() => columns.deleteColumn(idx)}>
               <IconButton aria-label="delete" >
