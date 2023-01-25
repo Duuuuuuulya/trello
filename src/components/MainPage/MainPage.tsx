@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 
 import { observer } from "mobx-react-lite";
 
@@ -9,27 +9,28 @@ import './MainPage.css'
 import Header from "../../Header/Header";
 import AddNewTaskButton from "../AddNewTask/AddNewTaskButton";
 import TodoCard from "../TodoCard/TodoCard";
-
-interface MainPageProps {
-
-}
+import { IconButton } from "@mui/material";
+import DeleteIcon from '@mui/icons-material/Delete';
 
 interface ICulom {
-  columnId: Number
+  header: string;
+  columnId: number
   tasks: []
   title: string
 }
 
-enum IStartCulom {
-  ICulom,
-  null
-}
-
+interface ITask {
+  header: string
+  text: string
+  difficult: number
+  taskOwner: string
+  taskId: number
+  }
 
 const MainPage = observer(()  => {
 
   
-  function dragStartHandler(e: React.DragEvent<HTMLDivElement>, task: any, column: any) {
+  function dragStartHandler(e: React.DragEvent<HTMLDivElement>, task: ITask, column: ICulom) {
     columns.currentTask = task
     columns.currentColumn = column
   }
@@ -46,15 +47,16 @@ const MainPage = observer(()  => {
     e.preventDefault()
   }
 
-  function dropCardHandler(e: React.DragEvent<HTMLDivElement>, column : any): void {
+  function dropCardHandler(e: React.DragEvent<HTMLDivElement>, column : ICulom): void {
     columns.dropCard(column)
   }
 
-  function dropHandler(e: React.DragEvent<HTMLDivElement>, task: any, column: any): void {
+  function dropHandler(e: React.DragEvent<HTMLDivElement>, task: ITask, column: ICulom): void {
     e.preventDefault()
     e.stopPropagation()
     columns.dropHandlerFunc(task, column)
   }
+
 
  
 
@@ -63,18 +65,23 @@ const MainPage = observer(()  => {
     <Header />
     <div className="columnsWrapper">
       <div className="ColumnHeader">
-        {columns.columnsArr.map((column, idx) => (
+        {columns.columnsArr.map((column: ICulom, idx: number) => (
             <div className="column" 
             onDragOver={(e) => dragOverHandler(e)}
             onDrop={(e) => dropCardHandler(e, column)}
             key={column.columnId}
             >
-            <div className="columnHeaderItem" key={column.title} 
-             >
+            <div className="columnHeaderItem" key={column.title}>
               {column.title}
+              <div className="deleteColumn" onClick={() => columns.deleteColumn(idx)}>
+              <IconButton aria-label="delete" >
+                <DeleteIcon />
+              </IconButton>
+              </div>
             </div>
+            
             <div>
-            {column.tasks.map((task: any) => (
+            {(column.tasks).map((task: ITask) => (
             <div 
             key={task.taskId} 
             draggable={true}

@@ -51,6 +51,7 @@
   flex-direction: row;
   overflow-x: auto;
   height: 95vh;
+  overflow-y: auto;
 }
 
 .ColumnHeader {
@@ -62,6 +63,7 @@
     margin: 15px;
     min-width: 360px;
     height: 60px;
+    min-height: 60px;
     background-color: #F4F4F4;
     border-radius: 10px;
     display: flex;
@@ -71,7 +73,11 @@
     font-size: 20px;
     font-family: 'Poppins';
 }
-
+.deleteColumn {
+  position: absolute;
+  margin-left: 280px;
+  margin-bottom: 3px;
+}
 .column {
   display: flex;
   flex-direction: column;
